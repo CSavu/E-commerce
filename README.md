@@ -24,7 +24,7 @@
     
     - see cart
     
-    - increase quantity of a product inside the cart
+    - change quantity of a product inside the cart
     
     - order products present in the cart
     
