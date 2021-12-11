@@ -1,9 +1,9 @@
 package com.example.ecommerce.services;
 
-import com.example.ecommerce.models.UserModel;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
-import static com.example.ecommerce.models.UserModel.setUserId;
-import static com.example.ecommerce.models.UserModel.setUserName;
+import static com.example.ecommerce.models.User.setUserId;
+import static com.example.ecommerce.models.User.setUserName;
 
 public class UserStateService {
 
@@ -18,6 +18,9 @@ public class UserStateService {
         if (validate(userName, password)) {
             // query to DB to get user id & data
             // set UserModel to what was taken from DB
+            String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
+// result.verified == true
             setUserName(userName);
             setUserId("1");
             return true;

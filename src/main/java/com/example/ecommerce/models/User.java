@@ -1,6 +1,6 @@
 package com.example.ecommerce.models;
 
-public class UserModel{
+public class User {
     private static String userName;
     private static String userId;
 
@@ -9,7 +9,7 @@ public class UserModel{
     }
 
     public static void setUserName(String userName) {
-        UserModel.userName = userName;
+        User.userName = userName;
     }
 
     public static String getUserId() {
@@ -17,6 +17,6 @@ public class UserModel{
     }
 
     public static void setUserId(String userId) {
-        UserModel.userId = userId;
+        User.userId = userId;
     }
 }

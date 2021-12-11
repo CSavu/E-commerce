@@ -8,7 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import static com.example.ecommerce.services.ProductsService.getAllProducts;
 import static com.example.ecommerce.services.UserStateService.setCurrentUser;
 import static com.example.ecommerce.utils.ControllerUtils.renderView;
 import static com.example.ecommerce.utils.database.DatabaseQueries.getQuery;
@@ -30,7 +32,8 @@ public class LoginController {
         renderView(currentStage, "shop-view.fxml");
     }
 
-    public void onSignUpButtonClick(ActionEvent actionEvent) {
+    public void onSignUpButtonClick(ActionEvent actionEvent) throws SQLException {
+        getAllProducts();
         System.out.println(getQuery(GET_ALL_PRODUCTS));
     }
 }

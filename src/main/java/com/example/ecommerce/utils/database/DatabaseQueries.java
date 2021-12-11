@@ -12,7 +12,7 @@ import static com.example.ecommerce.utils.database.DatabaseQueriesNames.*;
  */
 public class DatabaseQueries {
     private static Map<DatabaseQueriesNames, String> queries = Map.ofEntries(
-            Map.entry(GET_ALL_PRODUCTS, "SELECT * FROM products"),
+            Map.entry(GET_ALL_PRODUCTS, "SELECT * FROM product"),
             Map.entry(GET_ALL_USERS, "SELECT * FROM users"),
             Map.entry(GET_USERID_FROM_USERNAME, "SELECT id FROM users WHERE username=%s")
     );

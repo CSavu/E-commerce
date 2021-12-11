@@ -1,0 +1,12 @@
+com\example\ecommerce\utils\database\DatabaseQueriesNames.class
+com\example\ecommerce\controllers\ProductController.class
+com\example\ecommerce\utils\ServiceUtils.class
+com\example\ecommerce\HelloApplication.class
+com\example\ecommerce\controllers\ShopController.class
+com\example\ecommerce\controllers\CartController.class
+com\example\ecommerce\models\UserModel.class
+com\example\ecommerce\utils\ControllerUtils.class
+module-info.class
+com\example\ecommerce\services\UserStateService.class
+com\example\ecommerce\controllers\LoginController.class
+com\example\ecommerce\utils\database\DatabaseQueries.class
