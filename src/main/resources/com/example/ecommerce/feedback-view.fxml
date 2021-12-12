@@ -11,6 +11,6 @@
             <Font name="Calibri Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="247.0" layoutY="251.0" mnemonicParsing="false" onAction="#renderShopView" text="Back to the shop" />
+      <Button layoutX="247.0" layoutY="251.0" mnemonicParsing="false" onAction="#onShopButtonClick" text="Back to the shop" />
    </children>
 </AnchorPane>

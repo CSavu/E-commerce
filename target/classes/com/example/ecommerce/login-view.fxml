@@ -11,7 +11,6 @@
    <Label alignment="TOP_LEFT" text="Username" />
    <TextField id="usernameField" fx:id="usernameField" prefHeight="26.0" prefWidth="321.0" />
 
-    <Label fx:id="welcomeText" />
    <Label text="Password" />
    <PasswordField id="passwordField" fx:id="passwordField" />
     <Button fx:id="loginButton" onAction="#onLoginButtonClick" text="Login" />

@@ -1,6 +1,6 @@
 package com.example.ecommerce.services;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
+import at.favre.lib.crypto.bcrypt.*;
 
 import static com.example.ecommerce.models.User.setUserId;
 import static com.example.ecommerce.models.User.setUserName;

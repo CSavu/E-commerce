@@ -10,7 +10,7 @@ import static com.example.ecommerce.utils.ControllerUtils.renderView;
 
 public class ShopController {
 
-    public void renderCartView(ActionEvent actionEvent) throws IOException {
+    public void onCartButtonView(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "cart-view.fxml");
 

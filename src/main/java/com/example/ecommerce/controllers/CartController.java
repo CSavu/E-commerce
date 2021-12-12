@@ -10,7 +10,7 @@ import static com.example.ecommerce.utils.ControllerUtils.renderView;
 
 public class CartController {
 
-    public void renderCheckoutView(ActionEvent actionEvent) throws IOException {
+    public void onOrderButtonClick(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "checkout-view.fxml");
     }

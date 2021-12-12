@@ -10,7 +10,7 @@ import static com.example.ecommerce.utils.ControllerUtils.renderView;
 
 public class FeedbackController {
 
-    public void renderShopView(ActionEvent actionEvent) throws IOException {
+    public void onShopButtonClick(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "shop-view.fxml");
     }
