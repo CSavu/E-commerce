@@ -49,7 +49,7 @@ public class UserService {
         return retrievedId != null;
     }
 
-    public static Long getCurrentCartIdForUser() throws SQLException {
+    public static Long getCurrentCartIdForCurrentUser() throws SQLException {
         Long currentUserId = getUserId();
         if (currentUserId != null) {
             ps = conn.prepareStatement(String.format(getQuery(GET_LAST_CART_ID_FOR_USER), currentUserId));
@@ -63,7 +63,7 @@ public class UserService {
         return null;
     }
 
-    public static boolean buildNewCartForUser(){
+    public static boolean buildNewCartForCurrentUser(){
         try {
             Long currentUserId = getUserId();
             ps = conn.prepareStatement(String.format(getQuery(BUILD_NEW_CART_FOR_USER), currentUserId));
@@ -75,9 +75,9 @@ public class UserService {
         }
     }
 
-    public static boolean buildInvoiceForUser(String name, String surname, String address, String phone) {
+    public static boolean buildInvoiceForCurrentUser(String name, String surname, String address, String phone) {
         try {
-            Long currentCartId = getCurrentCartIdForUser();
+            Long currentCartId = getCurrentCartIdForCurrentUser();
             ps = conn.prepareStatement(String.format(getQuery(BUILD_USER_INVOICE), currentCartId, name + surname, address, phone));
             ps.execute();
             return true;

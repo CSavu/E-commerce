@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static com.example.mm.services.UserService.*;
@@ -13,11 +12,11 @@ import static com.example.mm.utils.ControllerUtils.renderView;
 public class CheckoutController {
 
     public void onPayButtonClick(ActionEvent actionEvent) throws SQLException {
-        boolean newInvoiceResult = buildInvoiceForUser("Dummy", "Dummy", "Dummy", "Dummy");
+        boolean newInvoiceResult = buildInvoiceForCurrentUser("Dummy", "Dummy", "Dummy", "Dummy");
         if (newInvoiceResult) {
-            boolean newCartResult = buildNewCartForUser();
+            boolean newCartResult = buildNewCartForCurrentUser();
             if (newCartResult) {
-                System.out.println(getCurrentCartIdForUser());
+                System.out.println(getCurrentCartIdForCurrentUser());
                 Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 renderView(currentStage, "feedback-view.fxml");
             }

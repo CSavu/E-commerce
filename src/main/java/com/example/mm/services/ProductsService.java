@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.example.mm.models.User.getUserId;
-import static com.example.mm.services.UserService.buildNewCartForUser;
-import static com.example.mm.services.UserService.getCurrentCartIdForUser;
+import static com.example.mm.services.UserService.buildNewCartForCurrentUser;
+import static com.example.mm.services.UserService.getCurrentCartIdForCurrentUser;
 import static com.example.mm.utils.database.DatabaseQueries.getQuery;
 import static com.example.mm.utils.database.DatabaseQueriesNames.*;
 
@@ -96,7 +96,7 @@ public class ProductsService {
         return products;
     }
 
-    public static List<Product> getProductsForUser() throws SQLException {
+    public static List<Product> getProductsForCurrentUser() throws SQLException {
         Long currentUserId = getUserId();
         if (currentUserId != null){
             ps = conn.prepareStatement(String.format(getQuery(GET_CART_PRODUCTS_FOR_USER), currentUserId));
@@ -118,16 +118,16 @@ public class ProductsService {
 
     public static boolean addProductToCart(Long productId) throws SQLException {
         Long currentUserId = getUserId();
-        Long currentCartId = getCurrentCartIdForUser();
+        Long currentCartId = getCurrentCartIdForCurrentUser();
         if (currentUserId != null){
             if (currentCartId != null){
                 ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
                 rs = ps.executeQuery();
                 return true;
             } else {
-                boolean newCartResult = buildNewCartForUser();
+                boolean newCartResult = buildNewCartForCurrentUser();
                 if (newCartResult){
-                    currentCartId = getCurrentCartIdForUser();
+                    currentCartId = getCurrentCartIdForCurrentUser();
                     ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
                     rs = ps.executeQuery();
                     return true;
