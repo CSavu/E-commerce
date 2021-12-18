@@ -19,7 +19,7 @@ public class DatabaseQueries {
             Map.entry(GET_USER_ID_AND_PASSWORD_FROM_USERNAME, "SELECT user_id, password FROM users WHERE user_name='%s'"),
             Map.entry(BUILD_USER_FROM_USERNAME_AND_PASSWORD, "INSERT INTO users(user_name, password) VALUES('%s', '%s')"),
             Map.entry(GET_PRODUCTS_BY_NAME, "SELECT * FROM products WHERE product_name LIKE '%%s%'"),
-            Map.entry(GET_PRODUCTS_FOR_USER, "SELECT p.product_id FROM users JOIN carts c on users.user_id = c.user_id JOIN carts_details cd on c.cart_id = cd.cart_id JOIN products p on cd.product_id = p.product_id\n" +
+            Map.entry(GET_CART_PRODUCTS_FOR_USER, "SELECT p.product_id FROM users JOIN carts c on users.user_id = c.user_id JOIN carts_details cd on c.cart_id = cd.cart_id JOIN products p on cd.product_id = p.product_id\n" +
                     "WHERE users.user_id=%d"),
             Map.entry(GET_LAST_CART_ID_FOR_USER, "SELECT cart_id FROM carts WHERE user_id='%s' ORDER BY cart_id DESC LIMIT 1"),
             Map.entry(BUILD_USER_INVOICE, "INSERT INTO invoices(cart_id, name, address, phone) VALUES(%d, '%s', '%s', '%s')"),

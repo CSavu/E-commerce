@@ -15,6 +15,8 @@ import static com.example.mm.utils.database.DatabaseQueriesNames.*;
 
 /**
  * TODO: Add try-catch in all SQL-related methods!
+ *
+ * TODO: Refactor getProducts methods!
  */
 public class ProductsService {
     private static String connectionUrl = "jdbc:mysql://localhost:3306/ecommerce?user=root";
@@ -97,7 +99,7 @@ public class ProductsService {
     public static List<Product> getProductsForUser() throws SQLException {
         Long currentUserId = getUserId();
         if (currentUserId != null){
-            ps = conn.prepareStatement(String.format(getQuery(GET_PRODUCTS_FOR_USER), currentUserId));
+            ps = conn.prepareStatement(String.format(getQuery(GET_CART_PRODUCTS_FOR_USER), currentUserId));
             rs = ps.executeQuery();
             List<Product> products = new ArrayList<>();
             while (rs.next()) {
