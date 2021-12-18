@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static com.example.mm.services.ProductsService.getProductsForCurrentUser;
