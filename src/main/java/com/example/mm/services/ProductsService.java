@@ -8,9 +8,14 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.example.mm.models.User.getUserId;
+import static com.example.mm.services.UserService.buildNewCartForUser;
+import static com.example.mm.services.UserService.getCurrentCartIdForUser;
 import static com.example.mm.utils.database.DatabaseQueries.getQuery;
 import static com.example.mm.utils.database.DatabaseQueriesNames.*;
 
+/**
+ * TODO: Add try-catch in all SQL-related methods!
+ */
 public class ProductsService {
     private static String connectionUrl = "jdbc:mysql://localhost:3306/ecommerce?user=root";
     private static Connection conn;
@@ -107,6 +112,27 @@ public class ProductsService {
             return products;
         }
         return Collections.emptyList();
+    }
+
+    public static boolean addProductToCart(Long productId) throws SQLException {
+        Long currentUserId = getUserId();
+        Long currentCartId = getCurrentCartIdForUser();
+        if (currentUserId != null){
+            if (currentCartId != null){
+                ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
+                rs = ps.executeQuery();
+                return true;
+            } else {
+                boolean newCartResult = buildNewCartForUser();
+                if (newCartResult){
+                    currentCartId = getCurrentCartIdForUser();
+                    ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
+                    rs = ps.executeQuery();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
