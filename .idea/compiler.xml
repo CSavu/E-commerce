@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+<<<<<<< HEAD
     <excludeFromCompile>
       <file url="file://$PROJECT_DIR$/src/main/java/module-info.java" />
     </excludeFromCompile>
+=======
+>>>>>>> 4c1daa6 (SmthSmth)
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
