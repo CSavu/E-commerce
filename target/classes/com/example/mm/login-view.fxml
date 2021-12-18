@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="450.0" prefWidth="411.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mm.controllers.LoginController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <Label alignment="TOP_LEFT" text="Username" />
+   <TextField id="usernameField" fx:id="usernameField" prefHeight="26.0" prefWidth="321.0" />
+
+   <Label text="Password" />
+   <PasswordField id="passwordField" fx:id="passwordField" />
+    <Button fx:id="loginButton" onAction="#onLoginButtonClick" text="Login" />
+   <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#onSignUpButtonClick" text="Sign up" />
+</VBox>
