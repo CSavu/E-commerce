@@ -8,6 +8,9 @@ import static com.example.mm.utils.ServiceUtils.hashPassword;
 import static com.example.mm.utils.database.DatabaseQueries.getQuery;
 import static com.example.mm.utils.database.DatabaseQueriesNames.*;
 
+/**
+ * TODO: Add try-catch in all SQL-related methods!
+ */
 public class UserService {
     private static final String connectionUrl = "jdbc:mysql://localhost:3306/ecommerce?user=root";
     private static Connection conn;
@@ -32,7 +35,7 @@ public class UserService {
             retrievedPass = rs.getString("password");
         }
         System.out.println(password + " " + retrievedPass);
-        if (retrievedId != null && checkMatchingPasswords(password, retrievedPass) == true){
+        if (retrievedId != null && checkMatchingPasswords(password, retrievedPass)){
             return retrievedId;
         }
         return null;
@@ -43,11 +46,10 @@ public class UserService {
         ps = conn.prepareStatement(String.format(getQuery(BUILD_USER_FROM_USERNAME_AND_PASSWORD), username, hashPassword(password)));
         ps.execute();
         Long retrievedId = validateUserOnSignIn(username, password);
-        if (retrievedId != null) return true;
-        return false;
+        return retrievedId != null;
     }
 
-    public static Long getCartIdForUser() throws SQLException {
+    public static Long getCurrentCartIdForCurrentUser() throws SQLException {
         Long currentUserId = getUserId();
         if (currentUserId != null) {
             ps = conn.prepareStatement(String.format(getQuery(GET_LAST_CART_ID_FOR_USER), currentUserId));
@@ -61,12 +63,25 @@ public class UserService {
         return null;
     }
 
-    public static boolean buildUserInvoice(String name, String surname, String address, String phone) {
+    public static boolean buildNewCartForCurrentUser(){
         try {
-            Long currentCartId = getCartIdForUser();
+            Long currentUserId = getUserId();
+            ps = conn.prepareStatement(String.format(getQuery(BUILD_NEW_CART_FOR_USER), currentUserId));
+            ps.execute();
+            return true;
+        } catch (Exception ex){
+            System.out.println(ex);
+            return false;
+        }
+    }
+
+    public static boolean buildInvoiceForCurrentUser(String name, String surname, String address, String phone) {
+        try {
+            Long currentCartId = getCurrentCartIdForCurrentUser();
             ps = conn.prepareStatement(String.format(getQuery(BUILD_USER_INVOICE), currentCartId, name + surname, address, phone));
             ps.execute();
             return true;
+            // after invoice is built, create a new, empty cart for the user (last and current new cart)
         } catch (Exception ex){
             System.out.println(ex);
             return false;

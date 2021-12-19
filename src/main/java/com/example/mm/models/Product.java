@@ -6,6 +6,8 @@ public class Product {
     private Double price;
     private String description;
 
+    private static long currentProductId;
+
     public Product(long id, String name, Double price, String description) {
         this.id = id;
         this.name = name;
@@ -15,6 +17,14 @@ public class Product {
 
     public long getId() {
         return id;
+    }
+
+    public static Long getCurrentProductId() {
+        return currentProductId;
+    }
+
+    public static void setCurrentProductId(Long id){
+        currentProductId = id;
     }
 
     public void setId(long id) {

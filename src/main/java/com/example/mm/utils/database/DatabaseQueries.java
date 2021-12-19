@@ -19,11 +19,15 @@ public class DatabaseQueries {
             Map.entry(GET_USER_ID_AND_PASSWORD_FROM_USERNAME, "SELECT user_id, password FROM users WHERE user_name='%s'"),
             Map.entry(BUILD_USER_FROM_USERNAME_AND_PASSWORD, "INSERT INTO users(user_name, password) VALUES('%s', '%s')"),
             Map.entry(GET_PRODUCTS_BY_NAME, "SELECT * FROM products WHERE product_name LIKE '%%s%'"),
-            Map.entry(GET_PRODUCTS_FOR_USER, "SELECT p.product_id FROM users JOIN carts c on users.user_id = c.user_id JOIN carts_details cd on c.cart_id = cd.cart_id JOIN products p on cd.product_id = p.product_id\n" +
+            Map.entry(GET_CART_PRODUCTS_FOR_USER, "SELECT p.product_id FROM users JOIN carts c on users.user_id = c.user_id JOIN carts_details cd on c.cart_id = cd.cart_id JOIN products p on cd.product_id = p.product_id\n" +
                     "WHERE users.user_id=%d"),
             Map.entry(GET_LAST_CART_ID_FOR_USER, "SELECT cart_id FROM carts WHERE user_id='%s' ORDER BY cart_id DESC LIMIT 1"),
             Map.entry(BUILD_USER_INVOICE, "INSERT INTO invoices(cart_id, name, address, phone) VALUES(%d, '%s', '%s', '%s')"),
-            Map.entry(ADD_PRODUCT_TO_NEW_CART, "INSERT INTO carts(user_id) VALUES (%d); INSERT INTO carts_details(cart_id, product_id, quantity) VALUES()")
+            Map.entry(BUILD_NEW_CART_FOR_USER, "INSERT INTO carts(user_id) VALUES(%d)"),
+            Map.entry(ADD_PRODUCT_TO_CART, "INSERT INTO carts_details(cart_id, product_id, quantity) VALUES(%d, %d, %d)"),
+            Map.entry(GET_PRODUCT_BY_ID, "SELECT * FROM products WHERE product_id=%d LIMIT 1"),
+            Map.entry(INCREASE_PRODUCT_QUANTITY_IN_CART, "UPDATE carts_details SET quantity=quantity+1 WHERE cart_id=%d AND product_id=%d"),
+            Map.entry(GET_NUMBER_OF_LINES_IN_CART_FOR_PRODUCT, "SELECT COUNT(*) FROM ecommerce.carts_details WHERE cart_id=%d AND product_id=%d")
     );
 
     public static String getQuery(DatabaseQueriesNames databaseQueriesName) {

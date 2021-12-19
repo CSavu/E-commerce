@@ -20,19 +20,21 @@
          </font>
       </Label>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@koala.png" />
-         </image>
       </ImageView>
       <ComboBox layoutX="229.0" layoutY="116.0" prefWidth="150.0" visibleRowCount="2">
          <items>
             <FXCollections fx:factory="observableArrayList">
-               <String fx:id="new" fx:value="Newest" />
                <String fx:id="pAsc" fx:value="Price ascending" />
                <String fx:id="pDesc" fx:value="Price descending" />
             </FXCollections>
          </items>
       </ComboBox>
+      <TableView fx:id="productTable" layoutX="229.0" layoutY="186.0" prefHeight="200.0" prefWidth="429.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Name"/>
+          <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
+        </columns>
+      </TableView>
    </children>
    <opaqueInsets>
       <Insets />
