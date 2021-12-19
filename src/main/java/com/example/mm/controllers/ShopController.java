@@ -1,32 +1,24 @@
 package com.example.mm.controllers;
 
-import com.example.mm.HelloApplication;
 import com.example.mm.models.Product;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import static com.example.mm.models.Product.setCurrentProductId;
 import static com.example.mm.services.ProductsService.getAllProducts;
-import static com.example.mm.services.ProductsService.getAllProductsByPriceAscending;
 import static com.example.mm.utils.ControllerUtils.renderView;
 
 public class ShopController implements Initializable {

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.example.mm.models.Product.getCurrentProductId;
 import static com.example.mm.models.User.getUserId;
 import static com.example.mm.services.UserService.buildNewCartForCurrentUser;
 import static com.example.mm.services.UserService.getCurrentCartIdForCurrentUser;
