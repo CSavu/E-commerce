@@ -18,6 +18,7 @@ module com.example.mm {
     exports com.example.mm;
     exports com.example.mm.controllers;
     opens com.example.mm.controllers to javafx.fxml;
+    opens com.example.mm.models to javafx.base;
     exports com.example.mm.utils;
     opens com.example.mm.utils to javafx.fxml;
     exports com.example.mm.utils.database;
