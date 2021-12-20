@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import static com.example.mm.services.ProductsService.getProductsForCurrentUser;
@@ -20,5 +21,13 @@ public class CartController {
     public void onOrderButtonClick(ActionEvent actionEvent) {
         Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "checkout-view.fxml");
+    }
+    public void goBackToShopCart(ActionEvent actionEvent) throws IOException {
+        Stage currentStage2 = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        renderView(currentStage2, "shop-view.fxml");
+    }
+    public void goToLoginCart(ActionEvent actionEvent) throws IOException   {
+        Stage currentStage3=(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        renderView(currentStage3,"login-view.fxml");
     }
 }
