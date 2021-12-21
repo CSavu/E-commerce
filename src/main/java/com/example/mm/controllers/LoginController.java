@@ -23,10 +23,14 @@ public class LoginController implements Initializable {
     private TextField usernameField;
 
     @FXML
-    private Label loginNegativeFeedback;
+    public Label loginNegativeFeedback;
 
     @FXML
     private PasswordField passwordField;
+
+    public LoginController(){
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

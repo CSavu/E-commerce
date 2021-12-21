@@ -81,7 +81,8 @@ public class ProductsService {
     }
 
     public static List<Product> getProductsByName(String productName) throws SQLException {
-        ps = conn.prepareStatement(String.format(getQuery(GET_PRODUCTS_BY_NAME), productName));
+        ps = conn.prepareStatement(getQuery(GET_PRODUCTS_BY_NAME));
+        ps.setString(1, "%" + productName + "%");
         rs = ps.executeQuery();
         List<Product> products = new ArrayList<>();
         while (rs.next()) {
@@ -103,7 +104,7 @@ public class ProductsService {
             rs = ps.executeQuery();
             List<Product> products = new ArrayList<>();
             while (rs.next()) {
-                long id = rs.getLong("product_id");
+                Long id = rs.getLong("product_id");
                 Product product = new Product(id);
                 products.add(product);
                 System.out.println(id);

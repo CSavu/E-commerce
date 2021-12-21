@@ -9,6 +9,7 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+
    <Label text="Welcome to our phone shop! :)">
       <font>
          <Font name="System Bold Italic" size="18.0" />
@@ -25,9 +26,11 @@
    <Label text="Password:">
       <font>
          <Font name="System Bold" size="12.0" />
-      </font></Label>
+      </font>
+   </Label>
    <PasswordField id="passwordField" fx:id="passwordField" />
    <Label fx:id="loginNegativeFeedback" text="Wrong username or password!" textFill="RED" />
-    <Button fx:id="loginButton" onAction="#onLoginButtonClick" style="-fx-background-color: #EAC540;" text="Login" />
+
+   <Button fx:id="loginButton" onAction="#onLoginButtonClick" style="-fx-background-color: #EAC540;" text="Login" />
    <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#onSignUpButtonClick" style="-fx-background-color: #EAC540;" text="Sign up" />
 </VBox>

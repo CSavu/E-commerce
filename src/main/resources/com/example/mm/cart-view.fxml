@@ -8,6 +8,7 @@
       <Button layoutX="274.0" layoutY="277.0" mnemonicParsing="false" onAction="#onOrderButtonClick" text="Order" />
       <Button layoutX="500.0" layoutY="26.0" mnemonicParsing="false" onAction="#goToLoginCart" text="Logout" />
       <Button layoutX="468.0" layoutY="329.0" mnemonicParsing="false" onAction="#goBackToShopCart" text="Back to Shop" />
-      <Label fx:id="cartNegativeFeedback" layoutX="168.0" layoutY="238.0" text="Please add something to the cart before ordering!" />
+      <Label fx:id="cartNegativeFeedback" layoutX="165.0" layoutY="320.0" text="Please add something to the cart before ordering!" textFill="#e5bd00" />
+
    </children>
 </AnchorPane>
