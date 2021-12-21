@@ -22,6 +22,7 @@ import static com.example.mm.services.ProductsService.*;
 import static com.example.mm.utils.ControllerUtils.renderView;
 
 public class ShopController implements Initializable {
+
     private ObservableList<Product> products;
 
     @FXML
@@ -44,7 +45,7 @@ public class ShopController implements Initializable {
     }
 
     public void onCartButtonView(ActionEvent actionEvent) {
-        Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "cart-view.fxml");
     }
 
@@ -55,19 +56,22 @@ public class ShopController implements Initializable {
             productTable.setRowFactory(tv -> {
                 TableRow<Product> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
-                    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    if (event.getClickCount() == 2 && (!row.isEmpty())) {
                         Product rowData = row.getItem();
                         // redirect user to Product view with the row data (product_id)
                         setCurrentProductId(rowData.getId());
-                        Stage currentStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         renderView(currentStage, "product-view.fxml");
                     }
                 });
-                return row ;
+                return row;
             });
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
             productTable.getItems().addAll(products);
+
+            System.out.println(productTable.getItems().get(0).getName());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,11 +79,11 @@ public class ShopController implements Initializable {
 
     public void onOrderBy(ActionEvent actionEvent) throws SQLException {
         System.out.println(orderByBox.getValue());
-        if (orderByBox.getValue().equals("Price ascending")){
+        if (orderByBox.getValue().equals("Price ascending")) {
             productTable.getItems().removeAll(products);
             products = FXCollections.observableArrayList(getAllProductsByPriceAscending());
             productTable.getItems().addAll(products);
-        } else if (orderByBox.getValue().equals("Price descending")){
+        } else if (orderByBox.getValue().equals("Price descending")) {
             productTable.getItems().removeAll(products);
             products = FXCollections.observableArrayList(getAllProductsByPriceDescending());
             productTable.getItems().addAll(products);

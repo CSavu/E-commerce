@@ -12,8 +12,8 @@
 <AnchorPane prefHeight="544.0" prefWidth="993.0" style="-fx-background-color: #5EA8AF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mm.controllers.ShopController">
    <children>
       <Button layoutX="816.0" layoutY="38.0" mnemonicParsing="false" onAction="#onCartButtonView" prefHeight="26.0" prefWidth="127.0" text="Cart" />
-      <TextField layoutX="229.0" layoutY="39.0" prefHeight="26.0" prefWidth="270.0" />
-      <Button layoutX="514.0" layoutY="39.0" mnemonicParsing="false" text="Search" />
+      <TextField fx:id="searchBar" layoutX="229.0" layoutY="39.0" prefHeight="26.0" prefWidth="270.0" />
+      <Button fx:id="searchButton" layoutX="514.0" layoutY="39.0" mnemonicParsing="false" onAction="#onSearch" text="Search" />
       <Accordion layoutY="239.0" />
       <Label layoutX="229.0" layoutY="79.0" text="Order by:">
          <font>
@@ -22,7 +22,7 @@
       </Label>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-      <ComboBox layoutX="229.0" layoutY="116.0" prefHeight="26.0" prefWidth="163.0" visibleRowCount="2">
+      <ComboBox fx:id="orderByBox" layoutX="229.0" layoutY="116.0" onAction="#onOrderBy" prefHeight="26.0" prefWidth="163.0" visibleRowCount="2">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:id="pAsc" fx:value="Price ascending" />
@@ -30,7 +30,6 @@
             </FXCollections>
          </items>
       </ComboBox>
-<<<<<<< HEAD
       <TableView fx:id="productTable" layoutX="229.0" layoutY="186.0" prefHeight="292.0" prefWidth="497.0">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="248.1999969482422" text="Name" />
@@ -39,13 +38,6 @@
          <effect>
             <ColorAdjust brightness="-0.11" contrast="-0.4" hue="-0.36" saturation="0.09" />
          </effect>
-=======
-      <TableView fx:id="productTable" layoutX="229.0" layoutY="186.0" prefHeight="200.0" prefWidth="429.0">
-        <columns>
-          <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Name"/>
-          <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
-        </columns>
->>>>>>> fec7671 (more refactoring)
       </TableView>
    </children>
    <opaqueInsets>

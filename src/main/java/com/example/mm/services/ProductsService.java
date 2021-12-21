@@ -1,6 +1,7 @@
 package com.example.mm.services;
 
 import com.example.mm.models.Product;
+import javafx.fxml.Initializable;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -105,7 +106,8 @@ public class ProductsService {
             List<Product> products = new ArrayList<>();
             while (rs.next()) {
                 Long id = rs.getLong("product_id");
-                Product product = new Product(id);
+                int quantity = rs.getInt("quantity");
+                Product product = new Product(id, quantity);
                 products.add(product);
                 System.out.println(id);
             }
@@ -127,7 +129,7 @@ public class ProductsService {
 
         if (currentUserId != null) {
             if (currentCartId != null) { // cart already exists -> check for product -> if exists -> increase quantity; else ADD_PRODUCT_TO_CART
-                if (getNumberOfProductLinesInCart(productId) > 0){
+                if (getNumberOfProductLinesInCart(productId) > 0) {
                     boolean increaseResult = increaseProductQuantityInCart(productId);
                     return increaseResult ? true : false;
                 } else {
@@ -169,6 +171,19 @@ public class ProductsService {
         if (currentUserId != null) {
             if (currentCartId != null) {
                 ps = conn.prepareStatement(String.format(getQuery(INCREASE_PRODUCT_QUANTITY_IN_CART), currentCartId, productId));
+                ps.execute();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean changeProductQuantityInCart(int quantity, Long productId) throws SQLException {
+        Long currentUserId = getUserId();
+        Long currentCartId = getCurrentCartIdForCurrentUser();
+        if (currentUserId != null) {
+            if (currentCartId != null) {
+                ps = conn.prepareStatement(String.format(getQuery(CHANGE_PRODUCT_QUANTITY_IN_CART), quantity, currentCartId, productId));
                 ps.execute();
                 return true;
             }

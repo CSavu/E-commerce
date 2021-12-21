@@ -34,12 +34,14 @@ public class CheckoutController {
             }
         }
     }
+
     public void goBackToCartCheckout(ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "cart-view.fxml");
     }
+
     public void goBackToShopCheckout(ActionEvent actionEvent) throws IOException {
-        Stage currentStage3 =(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage currentStage3 = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage3, "shop-view.fxml");
     }
 }

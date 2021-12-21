@@ -20,14 +20,14 @@ public class ControllerUtils {
      * @param currentStage
      * @param viewName
      */
-    public static void renderView(Stage currentStage, String viewName){
+    public static void renderView(Stage currentStage, String viewName) {
         try {
             Parent root = FXMLLoader.load(HelloApplication.class.getResource(viewName));
             stage = currentStage;
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

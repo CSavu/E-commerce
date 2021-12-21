@@ -28,7 +28,7 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
-    public LoginController(){
+    public LoginController() {
 
     }
 
@@ -39,8 +39,8 @@ public class LoginController implements Initializable {
 
     public void onLoginButtonClick(ActionEvent actionEvent) throws SQLException {
         boolean loginResult = setCurrentUser(usernameField.getText(), passwordField.getText());
-        if (loginResult == true){
-            Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        if (loginResult == true) {
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             renderView(currentStage, "shop-view.fxml");
         } else {
             // return negative feedback to user
@@ -51,10 +51,10 @@ public class LoginController implements Initializable {
 
     public void onSignUpButtonClick(ActionEvent actionEvent) throws SQLException {
         boolean buildResult = buildUser(usernameField.getText(), passwordField.getText());
-        if (buildResult){
+        if (buildResult) {
             boolean loginResult = setCurrentUser(usernameField.getText(), passwordField.getText());
             if (loginResult == true) {
-                Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 renderView(currentStage, "shop-view.fxml");
             } else {
                 // return negative feedback to user

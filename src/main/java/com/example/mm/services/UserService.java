@@ -35,12 +35,11 @@ public class UserService {
             retrievedPass = rs.getString("password");
         }
         System.out.println(password + " " + retrievedPass);
-        if (retrievedId != null && checkMatchingPasswords(password, retrievedPass)){
+        if (retrievedId != null && checkMatchingPasswords(password, retrievedPass)) {
             return retrievedId;
         }
         return null;
     }
-
 
     public static boolean buildUser(String username, String password) throws SQLException {
         ps = conn.prepareStatement(String.format(getQuery(BUILD_USER_FROM_USERNAME_AND_PASSWORD), username, hashPassword(password)));
@@ -63,13 +62,13 @@ public class UserService {
         return null;
     }
 
-    public static boolean buildNewCartForCurrentUser(){
+    public static boolean buildNewCartForCurrentUser() {
         try {
             Long currentUserId = getUserId();
             ps = conn.prepareStatement(String.format(getQuery(BUILD_NEW_CART_FOR_USER), currentUserId));
             ps.execute();
             return true;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
             return false;
         }
@@ -82,7 +81,7 @@ public class UserService {
             ps.execute();
             return true;
             // after invoice is built, create a new, empty cart for the user (last and current new cart)
-        } catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
             return false;
         }

@@ -11,7 +11,7 @@ public class ServiceUtils {
         return bcryptHashString;
     }
 
-    public static boolean checkMatchingPasswords(String plainPassword, String hashedPassword){
+    public static boolean checkMatchingPasswords(String plainPassword, String hashedPassword) {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }
