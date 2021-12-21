@@ -99,7 +99,7 @@ public class ProductsService {
     public static List<Product> getProductsForCurrentUser() throws SQLException {
         Long currentUserId = getUserId();
         if (currentUserId != null) {
-            ps = conn.prepareStatement(String.format(getQuery(GET_CART_PRODUCTS_FOR_USER), currentUserId));
+            ps = conn.prepareStatement(String.format(getQuery(GET_CART_PRODUCTS_FOR_USER), currentUserId, getCurrentCartIdForCurrentUser()));
             rs = ps.executeQuery();
             List<Product> products = new ArrayList<>();
             while (rs.next()) {
@@ -123,31 +123,20 @@ public class ProductsService {
     public static boolean addProductToCart(Long productId) throws SQLException {
         Long currentUserId = getUserId();
         Long currentCartId = getCurrentCartIdForCurrentUser();
-<<<<<<< HEAD
+
         if (currentUserId != null) {
-            if (currentCartId != null) {
-                // if already in the cart -> increase quantity in cart
-                // else -> ADD_PRODUCT_TO_CART
+            if (currentCartId != null) { // cart already exists -> check for product -> if exists -> increase quantity; else ADD_PRODUCT_TO_CART
                 if (getNumberOfProductLinesInCart(productId) > 0){
-                    increaseProductQuantityInCart(productId);
+                    boolean increaseResult = increaseProductQuantityInCart(productId);
+                    return increaseResult ? true : false;
                 } else {
                     ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
                     ps.execute();
+                    return true;
                 }
-                return true;
-            } else {
-                boolean newCartResult = buildNewCartForCurrentUser(); // new cart -> not added before -> add product to cart, not increase quantity
-                if (newCartResult) {
-=======
-        if (currentUserId != null){
-            if (currentCartId != null){
-                ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
-                rs = ps.executeQuery();
-                return true;
             } else {
                 boolean newCartResult = buildNewCartForCurrentUser();
-                if (newCartResult){
->>>>>>> 6563817 (Tiny refactor)
+                if (newCartResult) {
                     currentCartId = getCurrentCartIdForCurrentUser();
                     ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
                     ps.execute();
@@ -157,6 +146,7 @@ public class ProductsService {
         }
         return false;
     }
+
 
     public static Product getProductById(Long productId) throws SQLException {
         ps = conn.prepareStatement(String.format(getQuery(GET_PRODUCT_BY_ID), productId));
@@ -177,8 +167,6 @@ public class ProductsService {
         Long currentCartId = getCurrentCartIdForCurrentUser();
         if (currentUserId != null) {
             if (currentCartId != null) {
-                // if already in the cart -> increase quantity in cart
-                // else -> ADD_PRODUCT_TO_CART
                 ps = conn.prepareStatement(String.format(getQuery(INCREASE_PRODUCT_QUANTITY_IN_CART), currentCartId, productId));
                 ps.execute();
                 return true;
@@ -197,7 +185,7 @@ public class ProductsService {
                 ps = conn.prepareStatement(String.format(getQuery(GET_NUMBER_OF_LINES_IN_CART_FOR_PRODUCT), currentCartId, productId));
                 rs = ps.executeQuery();
                 int result = 0;
-                while (rs.next()){
+                while (rs.next()) {
                     result = rs.getInt("COUNT(*)");
                 }
                 return result;

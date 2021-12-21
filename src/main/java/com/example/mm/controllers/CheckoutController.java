@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import static com.example.mm.services.UserService.*;
@@ -22,14 +23,8 @@ public class CheckoutController {
     @FXML
     private TextField phoneNumberField;
 
-
-
     public void onPayButtonClick(ActionEvent actionEvent) throws SQLException {
-<<<<<<< HEAD
         boolean newInvoiceResult = buildInvoiceForCurrentUser(firstName.getText(), lastName.getText(), addressField.getText(), phoneNumberField.getText());
-=======
-        boolean newInvoiceResult = buildInvoiceForCurrentUser("Dummy", "Dummy", "Dummy", "Dummy");
->>>>>>> 6563817 (Tiny refactor)
         if (newInvoiceResult) {
             boolean newCartResult = buildNewCartForCurrentUser();
             if (newCartResult) {
@@ -38,7 +33,6 @@ public class CheckoutController {
                 renderView(currentStage, "feedback-view.fxml");
             }
         }
-
     }
     public void goBackToCartCheckout(ActionEvent actionEvent) throws IOException {
         Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
