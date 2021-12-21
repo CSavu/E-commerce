@@ -104,18 +104,22 @@ public class ProductsService {
             List<Product> products = new ArrayList<>();
             while (rs.next()) {
                 long id = rs.getLong("product_id");
-                String name = rs.getString("product_name");
-                String description = rs.getString("product_description");
-                Double price = rs.getDouble("price");
-                Product product = new Product(id, name, price, description);
+                Product product = new Product(id);
                 products.add(product);
-                System.out.println(id + name + description + price);
+                System.out.println(id);
             }
             return products;
         }
         return Collections.emptyList();
     }
 
+    /**
+     * Adds product to cart.
+     *
+     * @param productId - the id of the product
+     * @return success/failure of adding product to cart
+     * @throws SQLException
+     */
     public static boolean addProductToCart(Long productId) throws SQLException {
         Long currentUserId = getUserId();
         Long currentCartId = getCurrentCartIdForCurrentUser();
