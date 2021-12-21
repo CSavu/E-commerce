@@ -15,13 +15,13 @@ public class UserStateService {
     /**
      * Sets the state (userId) of the current user on Login/Sign up.
      *
-     * @param username  - given username
-     * @param password  - given password
+     * @param username - given username
+     * @param password - given password
      * @return success or failure (true/false) of setting the state of the entered user
      */
     public static boolean setCurrentUser(String username, String password) throws SQLException {
         Long userId = validateUserOnSignIn(username, password);
-        if (userId != null){
+        if (userId != null) {
             setUserId(userId);
             return true;
         }
@@ -33,9 +33,9 @@ public class UserStateService {
      *
      * @return success or failure of logging out the user
      */
-    public static boolean logoutUser(){
+    public static boolean logoutUser() {
         Long userId = getUserId();
-        if (userId != null){
+        if (userId != null) {
             setUserId(null);
             return true;
         }

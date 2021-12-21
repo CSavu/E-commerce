@@ -12,8 +12,8 @@ import static com.example.mm.utils.ControllerUtils.renderView;
 
 public class FeedbackController {
 
-    public void onShopButtonClick(ActionEvent actionEvent) throws IOException {
-        Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+    public void onShopButtonClick(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "shop-view.fxml");
     }
 }

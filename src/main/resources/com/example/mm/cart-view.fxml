@@ -2,13 +2,35 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mm.controllers.CartController">
    <children>
       <Button layoutX="274.0" layoutY="277.0" mnemonicParsing="false" onAction="#onOrderButtonClick" text="Order" />
       <Button layoutX="500.0" layoutY="26.0" mnemonicParsing="false" onAction="#goToLoginCart" text="Logout" />
       <Button layoutX="468.0" layoutY="329.0" mnemonicParsing="false" onAction="#goBackToShopCart" text="Back to Shop" />
+
       <Label fx:id="cartNegativeFeedback" layoutX="165.0" layoutY="320.0" text="Please add something to the cart before ordering!" textFill="#e5bd00" />
+
+      <Label layoutX="165.0" layoutY="234.0" text="Total:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+
+      <Label fx:id="totalLabel" layoutX="228.0" layoutY="234.0" text="0.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="productTable" layoutX="34.0" layoutY="14.0" prefHeight="200.0" prefWidth="227.0">
+        <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
+           <TableColumn fx:id="quantityColumn" prefWidth="75.0" text="Quantity" />
+        </columns>
+      </TableView>
+      <Button fx:id="updateButton" layoutX="442.0" layoutY="236.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" text="Update" />
 
    </children>
 </AnchorPane>

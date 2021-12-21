@@ -18,7 +18,7 @@ import static com.example.mm.services.ProductsService.addProductToCart;
 import static com.example.mm.services.ProductsService.getProductById;
 import static com.example.mm.utils.ControllerUtils.renderView;
 
-public class ProductController implements Initializable{
+public class ProductController implements Initializable {
     @FXML
     private Label productTitle;
 
@@ -36,31 +36,33 @@ public class ProductController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initialized product");
         feedbackLabel.setVisible(false);
-        try{
+        try {
             Product currentProduct = getProductById(getCurrentProductId());
             System.out.println("this is " + currentProduct.getPrice());
             productPrice.setText(currentProduct.getPrice().toString());
             productTitle.setText(currentProduct.getName());
             System.out.println(currentProduct.getName());
-        } catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }
 
     public void onAddToCart(ActionEvent actionEvent) throws SQLException {
         boolean addToCartResult = addProductToCart(getCurrentProductId());
-        if (addToCartResult){
+        if (addToCartResult) {
             System.out.println("added");
             feedbackLabel.setVisible(true);
         }
     }
+
     public void goBackToShop(ActionEvent actionEvent) throws IOException {
-        Stage currentStage1 = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage currentStage1 = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage1, "shop-view.fxml");
     }
-    public void goToCartProduct(ActionEvent actionEvent) throws IOException{
-        Stage currentStage2=(Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        renderView(currentStage2,"cart-view.fxml");
+
+    public void goToCartProduct(ActionEvent actionEvent) throws IOException {
+        Stage currentStage2 = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        renderView(currentStage2, "cart-view.fxml");
     }
 
 }

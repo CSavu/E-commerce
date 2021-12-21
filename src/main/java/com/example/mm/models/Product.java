@@ -8,8 +8,9 @@ public class Product {
 
     private static Long currentProductId;
 
-    public Product(Long id){
+    public Product(Long id, int quantity) {
         this.id = id;
+        this.quantity = quantity;
     }
 
     public Product(long id, String name, Double price, String description) {
@@ -23,11 +24,21 @@ public class Product {
         return id;
     }
 
+    private int quantity = 1;
+
+    public int getQuantity(){
+        return quantity;
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+
     public static Long getCurrentProductId() {
         return currentProductId;
     }
 
-    public static void setCurrentProductId(Long id){
+    public static void setCurrentProductId(Long id) {
         currentProductId = id;
     }
 
