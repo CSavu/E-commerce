@@ -7,18 +7,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.example.mm.models.Product.setCurrentProductId;
-import static com.example.mm.services.ProductsService.getAllProducts;
+import static com.example.mm.services.ProductsService.*;
 import static com.example.mm.utils.ControllerUtils.renderView;
 
 public class ShopController implements Initializable {
@@ -33,6 +33,11 @@ public class ShopController implements Initializable {
     @FXML
     private TableColumn<Product, Double> priceColumn;
 
+    @FXML
+    private ComboBox orderByBox;
+
+    @FXML
+    private TextField searchBar;
 
     public ShopController() {
 
@@ -68,4 +73,24 @@ public class ShopController implements Initializable {
         }
     }
 
+    public void onOrderBy(ActionEvent actionEvent) throws SQLException {
+        System.out.println(orderByBox.getValue());
+        if (orderByBox.getValue().equals("Price ascending")){
+            productTable.getItems().removeAll(products);
+            products = FXCollections.observableArrayList(getAllProductsByPriceAscending());
+            productTable.getItems().addAll(products);
+        } else if (orderByBox.getValue().equals("Price descending")){
+            productTable.getItems().removeAll(products);
+            products = FXCollections.observableArrayList(getAllProductsByPriceDescending());
+            productTable.getItems().addAll(products);
+        }
+    }
+
+    public void onSearch(ActionEvent actionEvent) throws SQLException {
+        String searchedText = searchBar.getText();
+        List<Product> productList = getProductsByName(searchedText);
+        productTable.getItems().removeAll(products);
+        products = FXCollections.observableArrayList(productList);
+        productTable.getItems().addAll(products);
+    }
 }

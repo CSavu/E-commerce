@@ -1,14 +1,14 @@
 package com.example.mm.models;
 
 public class Product {
-    private long id;
+    private Long id;
     private String name;
     private Double price;
     private String description;
 
-    private static long currentProductId;
+    private static Long currentProductId;
 
-    public Product(long id){
+    public Product(Long id){
         this.id = id;
     }
 
@@ -19,7 +19,7 @@ public class Product {
         this.description = description;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -31,7 +31,7 @@ public class Product {
         currentProductId = id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
