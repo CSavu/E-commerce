@@ -8,6 +8,10 @@ public class Product {
 
     private static long currentProductId;
 
+    public Product(long id){
+        this.id = id;
+    }
+
     public Product(long id, String name, Double price, String description) {
         this.id = id;
         this.name = name;

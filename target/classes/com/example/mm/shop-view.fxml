@@ -30,6 +30,7 @@
             </FXCollections>
          </items>
       </ComboBox>
+<<<<<<< HEAD
       <TableView fx:id="productTable" layoutX="229.0" layoutY="186.0" prefHeight="292.0" prefWidth="497.0">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="248.1999969482422" text="Name" />
@@ -38,6 +39,13 @@
          <effect>
             <ColorAdjust brightness="-0.11" contrast="-0.4" hue="-0.36" saturation="0.09" />
          </effect>
+=======
+      <TableView fx:id="productTable" layoutX="229.0" layoutY="186.0" prefHeight="200.0" prefWidth="429.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Name"/>
+          <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
+        </columns>
+>>>>>>> fec7671 (more refactoring)
       </TableView>
    </children>
    <opaqueInsets>
