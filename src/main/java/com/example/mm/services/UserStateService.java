@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import static com.example.mm.models.User.getUserId;
 import static com.example.mm.models.User.setUserId;
-import static com.example.mm.services.UserService.getCurrentCartIdForCurrentUser;
 import static com.example.mm.services.UserService.validateUserOnSignIn;
 
 /**

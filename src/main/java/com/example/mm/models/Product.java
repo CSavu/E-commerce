@@ -1,12 +1,11 @@
 package com.example.mm.models;
 
-import javafx.scene.control.TableColumn;
-
 public class Product {
     private Long id;
     private String name;
     private Double price;
     private String description;
+    private int quantity = 1;
 
     private static Long currentProductId;
 
@@ -26,13 +25,11 @@ public class Product {
         return id;
     }
 
-    private int quantity = 1;
-
-    public int getQuantity(){
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity){
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -18,8 +17,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.example.mm.models.Product.setCurrentProductId;
-import static com.example.mm.services.ProductsService.*;
+import static com.example.mm.services.ProductsService.getProducts;
+import static com.example.mm.services.ProductsService.getProductsByName;
 import static com.example.mm.utils.ControllerUtils.renderView;
+import static com.example.mm.utils.FilterConstants.*;
 
 public class ShopController implements Initializable {
 
@@ -44,7 +45,8 @@ public class ShopController implements Initializable {
 
     }
 
-    public void onCartButtonView(ActionEvent actionEvent) {
+    @FXML
+    private void onCartButtonClick(ActionEvent actionEvent) {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         renderView(currentStage, "cart-view.fxml");
     }
@@ -52,7 +54,7 @@ public class ShopController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            products = FXCollections.observableArrayList(getAllProducts());
+            products = FXCollections.observableArrayList(getProducts(ALL_PRODUCTS));
             productTable.setRowFactory(tv -> {
                 TableRow<Product> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
@@ -70,27 +72,26 @@ public class ShopController implements Initializable {
             priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
             productTable.getItems().addAll(products);
 
-            System.out.println(productTable.getItems().get(0).getName());
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void onOrderBy(ActionEvent actionEvent) throws SQLException {
-        System.out.println(orderByBox.getValue());
+    @FXML
+    private void onOrderByClick(ActionEvent actionEvent) throws SQLException {
         if (orderByBox.getValue().equals("Price ascending")) {
             productTable.getItems().removeAll(products);
-            products = FXCollections.observableArrayList(getAllProductsByPriceAscending());
+            products = FXCollections.observableArrayList(getProducts(ALL_PRODUCTS_PRICE_ASC));
             productTable.getItems().addAll(products);
         } else if (orderByBox.getValue().equals("Price descending")) {
             productTable.getItems().removeAll(products);
-            products = FXCollections.observableArrayList(getAllProductsByPriceDescending());
+            products = FXCollections.observableArrayList(getProducts(ALL_PRODUCTS_PRICE_DESC));
             productTable.getItems().addAll(products);
         }
     }
 
-    public void onSearch(ActionEvent actionEvent) throws SQLException {
+    @FXML
+    private void onSearchButtonClick(ActionEvent actionEvent) throws SQLException {
         String searchedText = searchBar.getText();
         List<Product> productList = getProductsByName(searchedText);
         productTable.getItems().removeAll(products);

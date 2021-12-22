@@ -1,7 +1,8 @@
 package com.example.mm.services;
 
 import com.example.mm.models.Product;
-import javafx.fxml.Initializable;
+import com.example.mm.utils.FilterConstants;
+import com.example.mm.utils.database.DatabaseQueriesNames;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,11 +15,6 @@ import static com.example.mm.services.UserService.getCurrentCartIdForCurrentUser
 import static com.example.mm.utils.database.DatabaseQueries.getQuery;
 import static com.example.mm.utils.database.DatabaseQueriesNames.*;
 
-/**
- * TODO: Add try-catch in all SQL-related methods!
- * <p>
- * TODO: Refactor getProducts methods!
- */
 public class ProductsService {
     private static String connectionUrl = "jdbc:mysql://localhost:3306/ecommerce?user=root";
     private static Connection conn;
@@ -33,24 +29,27 @@ public class ProductsService {
         }
     }
 
-    public static List<Product> getAllProducts() throws SQLException {
-        ps = conn.prepareStatement(getQuery(GET_ALL_PRODUCTS));
-        rs = ps.executeQuery();
-        List<Product> products = new ArrayList<>();
-        while (rs.next()) {
-            long id = rs.getLong("product_id");
-            String name = rs.getString("product_name");
-            String description = rs.getString("product_description");
-            Double price = rs.getDouble("price");
-            Product product = new Product(id, name, price, description);
-            products.add(product);
-            System.out.println(id + name + description + price);
+    public static List<Product> getProducts(FilterConstants FILTER) throws SQLException {
+        DatabaseQueriesNames query;
+        switch (FILTER) {
+            case ALL_PRODUCTS -> {
+                query = GET_ALL_PRODUCTS;
+                break;
+            }
+            case ALL_PRODUCTS_PRICE_ASC -> {
+                query = GET_ALL_PRODUCTS_BY_PRICE_ASC;
+                break;
+            }
+            case ALL_PRODUCTS_PRICE_DESC -> {
+                query = GET_ALL_PRODUCTS_BY_PRICE_DESC;
+                break;
+            }
+            default -> {
+                query = null;
+                break;
+            }
         }
-        return products;
-    }
-
-    public static List<Product> getAllProductsByPriceAscending() throws SQLException {
-        ps = conn.prepareStatement(getQuery(GET_ALL_PRODUCTS_BY_PRICE_ASC));
+        ps = conn.prepareStatement(getQuery(query));
         rs = ps.executeQuery();
         List<Product> products = new ArrayList<>();
         while (rs.next()) {
@@ -60,23 +59,6 @@ public class ProductsService {
             Double price = rs.getDouble("price");
             Product product = new Product(id, name, price, description);
             products.add(product);
-            System.out.println(id + name + description + price);
-        }
-        return products;
-    }
-
-    public static List<Product> getAllProductsByPriceDescending() throws SQLException {
-        ps = conn.prepareStatement(getQuery(GET_ALL_PRODUCTS_BY_PRICE_DESC));
-        rs = ps.executeQuery();
-        List<Product> products = new ArrayList<>();
-        while (rs.next()) {
-            long id = rs.getLong("product_id");
-            String name = rs.getString("product_name");
-            String description = rs.getString("product_description");
-            Double price = rs.getDouble("price");
-            Product product = new Product(id, name, price, description);
-            products.add(product);
-            System.out.println(id + name + description + price);
         }
         return products;
     }
@@ -93,12 +75,11 @@ public class ProductsService {
             Double price = rs.getDouble("price");
             Product product = new Product(id, name, price, description);
             products.add(product);
-            System.out.println(id + name + description + price);
         }
         return products;
     }
 
-    public static List<Product> getProductsForCurrentUser() throws SQLException {
+    public static List<Product> getCartProductsForCurrentUser() throws SQLException {
         Long currentUserId = getUserId();
         if (currentUserId != null) {
             ps = conn.prepareStatement(String.format(getQuery(GET_CART_PRODUCTS_FOR_USER), currentUserId, getCurrentCartIdForCurrentUser()));
@@ -109,7 +90,6 @@ public class ProductsService {
                 int quantity = rs.getInt("quantity");
                 Product product = new Product(id, quantity);
                 products.add(product);
-                System.out.println(id);
             }
             return products;
         }
@@ -123,14 +103,14 @@ public class ProductsService {
      * @return success/failure of adding product to cart
      * @throws SQLException
      */
-    public static boolean addProductToCart(Long productId) throws SQLException {
+    public static boolean addProductToCurrentCart(Long productId) throws SQLException {
         Long currentUserId = getUserId();
         Long currentCartId = getCurrentCartIdForCurrentUser();
 
         if (currentUserId != null) {
             if (currentCartId != null) { // cart already exists -> check for product -> if exists -> increase quantity; else ADD_PRODUCT_TO_CART
-                if (getNumberOfProductLinesInCart(productId) > 0) {
-                    boolean increaseResult = increaseProductQuantityInCart(productId);
+                if (getNumberOfProductLinesInCurrentCart(productId) > 0) {
+                    boolean increaseResult = incrementProductQuantityInCurrentCart(productId);
                     return increaseResult ? true : false;
                 } else {
                     ps = conn.prepareStatement(String.format(getQuery(ADD_PRODUCT_TO_CART), currentCartId, productId, 1));
@@ -150,7 +130,6 @@ public class ProductsService {
         return false;
     }
 
-
     public static Product getProductById(Long productId) throws SQLException {
         ps = conn.prepareStatement(String.format(getQuery(GET_PRODUCT_BY_ID), productId));
         rs = ps.executeQuery();
@@ -165,7 +144,7 @@ public class ProductsService {
         return product;
     }
 
-    private static boolean increaseProductQuantityInCart(Long productId) throws SQLException {
+    private static boolean incrementProductQuantityInCurrentCart(Long productId) throws SQLException {
         Long currentUserId = getUserId();
         Long currentCartId = getCurrentCartIdForCurrentUser();
         if (currentUserId != null) {
@@ -178,7 +157,20 @@ public class ProductsService {
         return false;
     }
 
-    public static boolean changeProductQuantityInCart(int quantity, Long productId) throws SQLException {
+    public static boolean deleteProductFromCurrentCart(Long productId) throws SQLException {
+        Long currentUserId = getUserId();
+        Long currentCartId = getCurrentCartIdForCurrentUser();
+        if (currentUserId != null) {
+            if (currentCartId != null) {
+                ps = conn.prepareStatement(String.format(getQuery(DELETE_PRODUCT_FROM_CART), currentCartId, productId));
+                ps.execute();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean changeProductQuantityInCurrentCart(int quantity, Long productId) throws SQLException {
         Long currentUserId = getUserId();
         Long currentCartId = getCurrentCartIdForCurrentUser();
         if (currentUserId != null) {
@@ -191,13 +183,11 @@ public class ProductsService {
         return false;
     }
 
-    private static int getNumberOfProductLinesInCart(Long productId) throws SQLException {
+    private static int getNumberOfProductLinesInCurrentCart(Long productId) throws SQLException {
         Long currentUserId = getUserId();
         Long currentCartId = getCurrentCartIdForCurrentUser();
         if (currentUserId != null) {
             if (currentCartId != null) {
-                // if already in the cart -> increase quantity in cart
-                // else -> ADD_PRODUCT_TO_CART
                 ps = conn.prepareStatement(String.format(getQuery(GET_NUMBER_OF_LINES_IN_CART_FOR_PRODUCT), currentCartId, productId));
                 rs = ps.executeQuery();
                 int result = 0;
@@ -211,5 +201,3 @@ public class ProductsService {
     }
 
 }
-
-
