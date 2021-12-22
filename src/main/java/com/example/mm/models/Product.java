@@ -1,5 +1,7 @@
 package com.example.mm.models;
 
+import javafx.scene.control.TableColumn;
+
 public class Product {
     private Long id;
     private String name;
