@@ -11,9 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -37,8 +38,11 @@ public class CartController implements Initializable {
     @FXML
     private TableColumn<Product, Double> priceColumn;
 
-    @FXML
-    private TableColumn<Product, Double> quantityColumn;
+   // @FXML
+   // private TableColumn<Product, Double> quantityColumn;
+   @FXML
+   private TableColumn<Product, Double> quantityColumn;
+
 
     @FXML
     private Label cartNegativeFeedback;
@@ -52,6 +56,10 @@ public class CartController implements Initializable {
 
     @FXML
     private void onUpdateButtonClick() throws SQLException {
+        //productTable.getItems().removeAll(products);
+        //products = FXCollections.observableArrayList(getProductsForCurrentUser());
+       // quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+         //productTable.getItems().addAll(products);
         for (Product p : productTable.getItems()){
             boolean changeResult = changeProductQuantityInCart(p.getQuantity(), p.getId());
             if (changeResult) System.out.println("success");
@@ -64,12 +72,13 @@ public class CartController implements Initializable {
         cartNegativeFeedback.setVisible(false);
         try {
             List<Product> productList = getProductsForCurrentUser();
-
+            productTable.setEditable(true);
+            quantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
             products = FXCollections.observableArrayList(getAllProducts());
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-            quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
+           // quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+            System.out.println(quantityColumn.getCellValueFactory());
             Double sum = 0.0;
             if (!productList.isEmpty()) {
                 for (Product partialProduct : productList) {
@@ -110,5 +119,15 @@ public class CartController implements Initializable {
             Stage currentStage3 = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             renderView(currentStage3, "login-view.fxml");
         }
+    }
+
+    public void changeQuantity(TableColumn.CellEditEvent<Product, Double> productDoubleCellEditEvent) throws SQLException {
+        //productTable.getItems().removeAll(products);
+        products = FXCollections.observableArrayList(getProductsForCurrentUser());
+       // productTable.getItems().addAll(products);
+        Product product=productTable.getSelectionModel().getSelectedItem();
+        product.setQuantity((int) Math.floor(productDoubleCellEditEvent.getNewValue()));
+
+
     }
 }
