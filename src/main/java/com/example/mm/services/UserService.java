@@ -8,9 +8,6 @@ import static com.example.mm.utils.ServiceUtils.hashPassword;
 import static com.example.mm.utils.database.DatabaseQueries.getQuery;
 import static com.example.mm.utils.database.DatabaseQueriesNames.*;
 
-/**
- * TODO: Add try-catch in all SQL-related methods!
- */
 public class UserService {
     private static final String connectionUrl = "jdbc:mysql://localhost:3306/ecommerce?user=root";
     private static Connection conn;
@@ -34,7 +31,6 @@ public class UserService {
             retrievedId = rs.getLong("user_id");
             retrievedPass = rs.getString("password");
         }
-        System.out.println(password + " " + retrievedPass);
         if (retrievedId != null && checkMatchingPasswords(password, retrievedPass)) {
             return retrievedId;
         }
@@ -69,7 +65,7 @@ public class UserService {
             ps.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
             return false;
         }
     }
@@ -82,7 +78,7 @@ public class UserService {
             return true;
             // after invoice is built, create a new, empty cart for the user (last and current new cart)
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
             return false;
         }
     }

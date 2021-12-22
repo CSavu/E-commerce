@@ -3,7 +3,7 @@ package com.example.mm.utils;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 /**
- * Utility methods used inside {@link com.example.mm.services }
+ * Utility methods used inside {@link com.example.mm.services}
  */
 public class ServiceUtils {
     public static String hashPassword(String password) {

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static com.example.mm.models.Product.getCurrentProductId;
-import static com.example.mm.services.ProductsService.addProductToCart;
+import static com.example.mm.services.ProductsService.addProductToCurrentCart;
 import static com.example.mm.services.ProductsService.getProductById;
 import static com.example.mm.utils.ControllerUtils.renderView;
 
@@ -34,35 +34,34 @@ public class ProductController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Initialized product");
         feedbackLabel.setVisible(false);
         try {
             Product currentProduct = getProductById(getCurrentProductId());
-            System.out.println("this is " + currentProduct.getPrice());
             productPrice.setText(currentProduct.getPrice().toString());
             productTitle.setText(currentProduct.getName());
-            System.out.println(currentProduct.getName());
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
     }
 
-    public void onAddToCart(ActionEvent actionEvent) throws SQLException {
-        boolean addToCartResult = addProductToCart(getCurrentProductId());
+    @FXML
+    private void onAddToCartButtonClick(ActionEvent actionEvent) throws SQLException {
+        boolean addToCartResult = addProductToCurrentCart(getCurrentProductId());
         if (addToCartResult) {
-            System.out.println("added");
             feedbackLabel.setVisible(true);
         }
     }
 
-    public void goBackToShop(ActionEvent actionEvent) throws IOException {
-        Stage currentStage1 = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        renderView(currentStage1, "shop-view.fxml");
+    @FXML
+    private void onShopButtonClick(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        renderView(currentStage, "shop-view.fxml");
     }
 
-    public void goToCartProduct(ActionEvent actionEvent) throws IOException {
-        Stage currentStage2 = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        renderView(currentStage2, "cart-view.fxml");
+    @FXML
+    private void onCartButtonClick(ActionEvent actionEvent) throws IOException {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        renderView(currentStage, "cart-view.fxml");
     }
 
 }

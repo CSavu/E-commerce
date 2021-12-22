@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Utility methods used inside {@link com.example.mm}
+ * Utility methods used inside {@link com.example.mm.controllers}
  */
 public class ControllerUtils {
     private static Stage stage;
@@ -28,7 +28,7 @@ public class ControllerUtils {
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }
