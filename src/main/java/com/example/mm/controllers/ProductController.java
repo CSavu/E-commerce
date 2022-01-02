@@ -27,7 +27,8 @@ public class ProductController implements Initializable {
 
     @FXML
     private Label feedbackLabel;
-
+    @FXML
+    private Label productDescription;
     public ProductController() {
 
     }
@@ -39,6 +40,7 @@ public class ProductController implements Initializable {
             Product currentProduct = getProductById(getCurrentProductId());
             productPrice.setText(currentProduct.getPrice().toString());
             productTitle.setText(currentProduct.getName());
+            productDescription.setText(currentProduct.getDescription());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
